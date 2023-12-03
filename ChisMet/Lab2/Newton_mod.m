@@ -1,0 +1,25 @@
+function [Xk, Yk] = Newton_mod(f,diap,p)
+    a = diap(1);
+    b = diap(2);
+    df = char(diff(sym(f))); 
+    ddf = char(diff(sym(df)));
+    F = inline(f);
+    F1 = inline(df);
+    F2 = inline(ddf);
+    c = 0;
+    eps = 10^-16;
+    if F(a)*F2(a) > 0
+        Xk = b;
+    else
+        Xk = a;
+    end
+    while abs(F1(Xk)) > eps
+        c = c + 1;
+        X0 = Xk;
+        Xk =  X0 - p*(F1(X0)/(F2(X0))); 
+        Yk = F(Xk);
+    end
+    c
+    Xk
+    Yk
+end
