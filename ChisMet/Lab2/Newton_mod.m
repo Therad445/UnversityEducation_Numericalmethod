@@ -10,10 +10,12 @@ function [Xk, Yk] = Newton_mod(f,diap,p)
     eps = 10^-16;
     if F(a)*F2(a) > 0
         Xk = b;
+        X0 = a;
     else
         Xk = a;
+        X0 = b;
     end
-    while abs(F1(Xk)) > eps
+    while abs(Xk-X0) > eps
         c = c + 1;
         X0 = Xk;
         Xk =  X0 - p*(F1(X0)/(F2(X0))); 
